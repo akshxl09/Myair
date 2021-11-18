@@ -22,8 +22,8 @@ def init_models():
     '''mongodb-init function'''
     cur = MongoClient(os.environ['MYAIR_MONGODB'])
     db_name = 'Myair'
+    col_name = 'airpolution'
     
     # Create collection
-    col = cur[db_name]['airpolution']
-    col.insert_one({'a':1})
+    col = cur[db_name][col_name]
     cur.close()
