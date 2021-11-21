@@ -55,13 +55,37 @@ function makeDetailAddr(result, status) {
                         detailAddr + 
                     '</div>';
 
+        //여기서 주소 가져오기
+        var data = get_airpolution(result[0].address.address_name);
+        console.log(data);
+
+        var table = document.getElementById('cur_loc');
+        table.innerHTML = "<td>" + data['MSRDATE'] + "</td>";
+        table.innerHTML += "<td>" + data['MSRSTENAME'] + "</td>";
+        table.innerHTML += "<td>" + data['GRADE'] + "</td>";
+        table.innerHTML += "<td>" + data['PM10'] + "</td>";
+        table.innerHTML += "<td>" + data['PM25'] + "</td>";
+
         // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
         infowindow.setContent(content);
         infowindow.open(map, marker);
     }   
 }
 
-function get_airpolution(){
-    
-
+function get_airpolution(loc){
+    var result;
+    $.ajax({
+        url: "get_airpolution",
+        data: {'loc': loc.slice(3,6)},
+        datatype: "json",
+        async: false,
+        success: function(data){
+            console.log("ajax 성공");
+            result = data['data'];
+        },
+        error:function(res){
+            console.log("ajax 실패");
+        }
+    });
+    return result;
 }
