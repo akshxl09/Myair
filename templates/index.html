@@ -3,6 +3,8 @@
     <head>
         <link rel="stylesheet" href="../static/css/style.css?after">
         <script type="text/javascript" src="../static/js/map.js?ver=2"></script>
+        <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link rel="shortcut icon" href="#">
         <style>
             .map_wrap {position:relative;width:100%;height:350px;}
             .title {font-weight:bold;display:block;}
@@ -14,7 +16,7 @@
     <body>
         <h1>Myair</h1>
         <div class="map_wrap">
-            <div id="map" style="width:1000px;height:300px;position:relative;overflow:hidden;">
+            <div id="map" style="width:100%;height:300px;position:relative;overflow:hidden;">
                 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{appkey}}&libraries=services"></script>
             </div>
             <div class="hAddr">
@@ -77,7 +79,7 @@
 
         </script>
 
-    <!--
+    
         <div>
             <table border="1">
                 <th>측정날짜</th>
@@ -85,15 +87,15 @@
                 <th>대기상태</th>
                 <th>미세먼지</th>
                 <th>초미세먼지</th>
-                <tr>
-                    <td>첫번째 칸</td>
-                    <td>두번째 칸</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                <tr id="cur_loc">
+                    <td id="date"></td>
+                    <td id="location"></td>
+                    <td id="grade"></td>
+                    <td id="pm10"></td>
+                    <td id="pm25"></td>
                 </tr>
             </table>
         </div>
-    -->     
+         
     </body>
 </html>
