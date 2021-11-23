@@ -5,18 +5,11 @@
         <script type="text/javascript" src="../static/js/map.js?ver=2"></script>
         <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
         <link rel="shortcut icon" href="#">
-        <style>
-            .map_wrap {position:relative;width:100%;height:350px;}
-            .title {font-weight:bold;display:block;}
-            .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
-            #centerAddr {display:block;margin-top:2px;font-weight: normal;}
-            .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-        </style>
     </head>
     <body>
         <h1>Myair</h1>
         <div class="map_wrap">
-            <div id="map" style="width:100%;height:300px;position:relative;overflow:hidden;">
+            <div id="map" style="width:100%;height:110%;position:relative;overflow:hidden;">
                 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{appkey}}&libraries=services"></script>
             </div>
             <div class="hAddr">
@@ -29,7 +22,7 @@
             var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                 mapOption = { 
                     center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-                    level: 5 // 지도의 확대 레벨 
+                    level: 7 // 지도의 확대 레벨 
                 }; 
 
             var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -46,6 +39,7 @@
                 // 마커를 클릭한 위치에 표시합니다 
                 marker.setPosition(mouseEvent.latLng);
                 marker.setMap(map);
+                
             });
 
             searchAddrFromCoords(map.getCenter(), displayCenterInfo);   // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
@@ -75,24 +69,30 @@
                 var locPosition = new kakao.maps.LatLng(37.566826, 126.9786567);
                 var message = 'geolocation을 사용할수 없어요..';
                 displayMarker(locPosition, message);   
-            }
+            } 
 
+            get_avg_airpollution();
         </script>
 
-    
-        <div>
+        <div class='avg_table'>
+            <caption>서울시 평균 대기오염</caption>
+            <table border="1">
+                <th>대기상태</th>
+                <th>미세먼지</th>
+                <th>초미세먼지</th>
+                <tr id='avg_seoul'>
+                </tr>
+            </table>
+        </div>
+
+        <div class='cur_table'>
             <table border="1">
                 <th>측정날짜</th>
                 <th>위치</th>
                 <th>대기상태</th>
                 <th>미세먼지</th>
                 <th>초미세먼지</th>
-                <tr id="cur_loc">
-                    <td id="date"></td>
-                    <td id="location"></td>
-                    <td id="grade"></td>
-                    <td id="pm10"></td>
-                    <td id="pm25"></td>
+                <tr id='cur_loc'>
                 </tr>
             </table>
         </div>

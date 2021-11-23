@@ -55,37 +55,66 @@ function makeDetailAddr(result, status) {
                         detailAddr + 
                     '</div>';
 
-        //여기서 주소 가져오기
-        var data = get_airpolution(result[0].address.address_name);
-        console.log(data);
+        // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+        infowindow.setContent(content);
+        infowindow.open(map, marker);
 
-        var table = document.getElementById('cur_loc');
+        //여기서 주소 가져오기
+        var data = get_airpollution(result[0].address.address_name);
+        if(data){
+        var table = document.getElementById('cur_loc');        
         table.innerHTML = "<td>" + data['MSRDATE'] + "</td>";
         table.innerHTML += "<td>" + data['MSRSTENAME'] + "</td>";
         table.innerHTML += "<td>" + data['GRADE'] + "</td>";
         table.innerHTML += "<td>" + data['PM10'] + "</td>";
         table.innerHTML += "<td>" + data['PM25'] + "</td>";
-
-        // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-        infowindow.setContent(content);
-        infowindow.open(map, marker);
+        table.innerHTML += "</table>";
+        }
+        else{
+            alert("서울특별시만 대기오염 정보를 확인할 수 있습니다!");
+        }
+    
     }   
 }
 
-function get_airpolution(loc){
+function get_airpollution(loc){
     var result;
+    var tmp;
+    if(loc.slice(0,2)!= "서울") return 0;
+    if(loc[4]=='구') tmp = loc.slice(3,5);
+    else if(loc[5]=='구') tmp = loc.slice(3,6);
+    else tmp = loc.slice(3,7);
     $.ajax({
-        url: "get_airpolution",
-        data: {'loc': loc.slice(3,6)},
+        url: "get_airpollution",
+        data: {'loc': tmp},
         datatype: "json",
         async: false,
         success: function(data){
-            console.log("ajax 성공");
+            console.log("listAir ajax 성공");
             result = data['data'];
         },
         error:function(res){
-            console.log("ajax 실패");
+            console.log("listAir ajax 실패");
         }
     });
     return result;
+}
+
+function get_avg_airpollution(){
+    $.ajax({
+        url: "get_avg_airpollution",
+        data: null,
+        datatype: "json",
+        success: function(data){
+            console.log("avgAir ajax 성공");
+            var table = document.getElementById('avg_seoul');        
+            table.innerHTML = "<td>" + data['data']['GRADE'] + "</td>";
+            table.innerHTML += "<td>" + data['data']['PM10'] + "</td>";
+            table.innerHTML += "<td>" + data['data']['PM25'] + "</td>";
+            table.innerHTML += "</table>"; 
+        },
+        error:function(res){
+            console.log("avgAir ajax 실패");
+        }
+    });
 }

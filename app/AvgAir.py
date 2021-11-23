@@ -1,25 +1,43 @@
 from flask import *
-from pprint import pprint
+from bson import json_util
+import datetime
 import requests
 from pymongo import MongoClient
 import os
 
 avg = Blueprint('avg',__name__)
 
-@avg.route('/avg')
+@avg.route('/get_avg_airpollution')
 def avgAir():
-    url = "http://openapi.seoul.go.kr:8088/6d704f6276616b7339367762736a70/json/ListAvgOfSeoulAirQualityService/1/5/"
-    data = requests.get(url).json()
-    pprint(data['ListAvgOfSeoulAirQualityService']['row'])
+
+    now = datetime.datetime.now()
 
     cur = MongoClient(os.environ['MYAIR_MONGODB'])
     db_name = 'Myair'
-    col_name = 'avg'
-    
-    # Create collection
-    col = cur[db_name][col_name]
-    col.insert_many(data['ListAvgOfSeoulAirQualityService']['row'])
+    col = cur[db_name]['avg']
+    col_date = cur[db_name]['masterconfig']
+    query = col.find_one()
 
+    if not query:  #디비가 비어있으면
+        url = 'http://openapi.seoul.go.kr:8088/' + os.environ['OPENDATA_APP_KEY'] +'/json/ListAvgOfSeoulAirQualityService/1/1/'
+        data = requests.get(url).json()
+        col.insert_one(data['ListAvgOfSeoulAirQualityService']['row'][0])
+        col_date.insert_one({'avgDate': now})
 
+    else:
+        date = col_date.find_one({"avgDate":{'$exists': 'true'}})['avgDate']
 
-    return redirect('/')
+        if (now - date).seconds/3600 >= 1: #디비에 넣은지 1시간이 지났으면
+            url = 'http://openapi.seoul.go.kr:8088/' + os.environ['OPENDATA_APP_KEY'] +'/json/ListAvgOfSeoulAirQualityService/1/1/'
+            data = requests.get(url).json()
+            
+            col.remove()
+            col.insert_one(data['ListAvgOfSeoulAirQualityService']['row'][0])
+            col_date.update_one({'avgDate':{'$exists': 'true'}}, {'$set':{'avgDate': now}})
+
+    result = col.find_one()
+
+    return jsonify(
+        result = 'success',
+        data = json.loads(json_util.dumps(result))
+    )

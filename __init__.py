@@ -1,7 +1,6 @@
 from app.index import index
-from app.MeasuringPlace import place
-from app.ListAir import list
-from app.AvgAir import avg
+from app.airList import list
+from app.avgAir import avg
 from flask import *
 from flask_cors import CORS
 from flask_jwt_extended import *
@@ -22,7 +21,6 @@ jwt = JWTManager(app)
 def main():
     init_models()
     app.register_blueprint(index)
-    app.register_blueprint(place)
     app.register_blueprint(list)
     app.register_blueprint(avg)
     
