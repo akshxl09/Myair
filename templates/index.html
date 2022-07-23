@@ -1,15 +1,104 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="../static/css/style.css?after">
-        <script type="text/javascript" src="../static/js/map.js?ver=2"></script>
+        <link rel="stylesheet" href="../static/css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="../static/js/map.js"></script>
         <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
         <link rel="shortcut icon" href="#">
     </head>
     <body>
-        <h1>Myair</h1>
+        <h1 style='text-align: center;'>MyAir</h1>
+
+        <div class='avg_table'>
+            <table border="1" style="width:1000px;">
+                <caption>Seoul Real Time Average Air Pollution</caption>
+                <th>대기상태<br>Air status</th>
+                <th>상태결정물질<br>Main pollutant</th>
+                <th>미세먼지<br>Particulates</th>
+                <th>초미세먼지<br>Ultrafine particle</th>
+                <th>이산화질소<br>Nitrogen dioxide</th>
+                <th>오존<br>Ozone</th>
+                <th>일산화탄소<br>Carbon monoxide</th>
+                <th>아황산가스<br>Sulfur dioxide</th>
+                <tr id='avg_seoul'>
+                </tr>
+            </table>
+        </div>
+
+        <div class='cur_table'>
+            <table border="1" style="width:1200px;">
+                <caption>Current Location Real Time Air Pollution</caption>
+                <th>위치<br>Location</th>
+                <th>대기상태<br>Air status</th>
+                <th>상태결정물질<br>Main pollutant</th>
+                <th>미세먼지<br>Particulates</th>
+                <th>초미세먼지<br>Ultrafine particle</th>
+                <th>이산화질소<br>Nitrogen dioxide</th>
+                <th>오존<br>Ozone</th>
+                <th>일산화탄소<br>Carbon monoxide</th>
+                <th>아황산가스<br>Sulfur dioxide</th>
+                <tr id='cur_loc'>
+                </tr>
+            </table>
+        </div>
+
+        <div class='standard'>
+            <table border="1" style="width:600px;">
+                <caption>Air Pollution Standard</caption>
+                <th>구분<br>Property</th>
+                <th>좋음<br>Good</th>
+                <th>보통<br>Normal</th>
+                <th>나쁨<br>Bad</th>
+                <th>매우 나쁨<br>Very bad</th>
+                <tr id='cur_loc'>
+                    <td>초미세먼지<br>Ultrafine particle</td>
+                    <td>0 ~ 15</td>
+                    <td>16 ~ 35</td>
+                    <td>36 ~ 75</td>
+                    <td>more than 76</td>
+                </tr>
+                <tr>
+                    <td>미세먼지<br>Particulates</td>
+                    <td>0 ~ 30</td>
+                    <td>31 ~ 80</td>
+                    <td>81 ~ 150</td>
+                    <td>more than 151</td>
+                </tr>
+                <tr>
+                    <td>오존<br>Ozone</td>
+                    <td>0 ~ 0.030</td>
+                    <td>0.031 ~ 0.090</td>
+                    <td>0.091 ~ 0.150</td>
+                    <td>more than 0.151</td>
+                </tr>
+                <tr>
+                    <td>이산화질소<br>Nitrogen dioxide</td>
+                    <td>0 ~ 0.030</td>
+                    <td>0.031 ~ 0.060</td>
+                    <td>0.061 ~ 0.200</td>
+                    <td>more than 0.201</td>
+                </tr>
+                <tr>
+                    <td>일산화탄소<br>Carbon monoxide</td>
+                    <td>0 ~ 2.00</td>
+                    <td>2.01 ~ 9.00</td>
+                    <td>9.01 ~ 15.00</td>
+                    <td>more than 15.01</td>
+                </tr>
+                <tr>
+                    <td>아황산가스<br>Sulfur dioxide</td>
+                    <td>0 ~ 0.020</td>
+                    <td>0.021 ~ 0.050</td>
+                    <td>0.051 ~ 0.150</td>
+                    <td>more than 0.151</td>
+                </tr>
+            </table>
+        </div>
+       
+
         <div class="map_wrap">
-            <div id="map" style="width:100%;height:110%;position:relative;overflow:hidden;">
+            <div id="map" style="width:90%;height:500px;">
                 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{appkey}}&libraries=services"></script>
             </div>
             <div class="hAddr">
@@ -68,34 +157,11 @@
                 
                 var locPosition = new kakao.maps.LatLng(37.566826, 126.9786567);
                 var message = 'geolocation을 사용할수 없어요..';
+                console.log('geolocation error');
                 displayMarker(locPosition, message);   
             } 
 
             get_avg_airpollution();
         </script>
-
-        <div class='avg_table'>
-            <caption>서울시 평균 대기오염</caption>
-            <table border="1">
-                <th>대기상태</th>
-                <th>미세먼지</th>
-                <th>초미세먼지</th>
-                <tr id='avg_seoul'>
-                </tr>
-            </table>
-        </div>
-
-        <div class='cur_table'>
-            <table border="1">
-                <th>측정날짜</th>
-                <th>위치</th>
-                <th>대기상태</th>
-                <th>미세먼지</th>
-                <th>초미세먼지</th>
-                <tr id='cur_loc'>
-                </tr>
-            </table>
-        </div>
-         
     </body>
 </html>

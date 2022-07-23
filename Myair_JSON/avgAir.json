@@ -1,0 +1,6 @@
+{
+"DESCRIPTION" : {"PM25":"초미세먼지(단위:㎍/㎥)","CARBON":"일산화탄소(단위:ppm)","POLLUTANT":"지수 결정 물질","PM10":"미세먼지(단위:㎍/㎥)","GRADE":"통합대기환경지수 등급","IDEX_MVL":"통합대기환경지수","NITROGEN":"이산화질소(단위:ppm)","SULFUROUS":"아황산가스(단위:ppm)","OZONE":"오존(단위:ppm)"},
+"DATA" : [
+{"ozone":0.005,"idex_mvl":"85","carbon":0.8,"sulfurous":0.004,"pm10":50,"grade":"보통","pm25":22,"pollutant":"NO2","nitrogen":0.051}
+]
+}

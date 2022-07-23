@@ -1,0 +1,30 @@
+{
+"DESCRIPTION" : {"MSRADM":"측정소행정용코드","MSRSTE_NM":"측정소명"},
+"DATA" : [
+{"msradm":"111221","msrste_nm":"구로구"},
+{"msradm":"111281","msrste_nm":"금천구"},
+{"msradm":"111151","msrste_nm":"중랑구"},
+{"msradm":"111311","msrste_nm":"노원구"},
+{"msradm":"111181","msrste_nm":"은평구"},
+{"msradm":"111191","msrste_nm":"서대문구"},
+{"msradm":"111201","msrste_nm":"마포구"},
+{"msradm":"111301","msrste_nm":"양천구"},
+{"msradm":"111212","msrste_nm":"강서구"},
+{"msradm":"111231","msrste_nm":"영등포구"},
+{"msradm":"111241","msrste_nm":"동작구"},
+{"msradm":"111273","msrste_nm":"송파구"},
+{"msradm":"111274","msrste_nm":"강동구"},
+{"msradm":"111123","msrste_nm":"종로구"},
+{"msradm":"111121","msrste_nm":"중구"},
+{"msradm":"111131","msrste_nm":"용산구"},
+{"msradm":"111142","msrste_nm":"성동구"},
+{"msradm":"111141","msrste_nm":"광진구"},
+{"msradm":"111152","msrste_nm":"동대문구"},
+{"msradm":"111161","msrste_nm":"성북구"},
+{"msradm":"111291","msrste_nm":"강북구"},
+{"msradm":"111171","msrste_nm":"도봉구"},
+{"msradm":"111251","msrste_nm":"관악구"},
+{"msradm":"111262","msrste_nm":"서초구"},
+{"msradm":"111261","msrste_nm":"강남구"}
+]
+}

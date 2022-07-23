@@ -1,5 +1,5 @@
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-function displayMarker(locPosition) {
+function displayMarker(locPosition, message) {
             
     map.setCenter(locPosition);  // 지도 중심좌표를 접속위치로 변경합니다
 
@@ -59,19 +59,31 @@ function makeDetailAddr(result, status) {
         infowindow.setContent(content);
         infowindow.open(map, marker);
 
+        var loc = result[0].address.address_name;
         //여기서 주소 가져오기
-        var data = get_airpollution(result[0].address.address_name);
+        if(loc[4]=='구') tmp = loc.slice(3,5);
+        else if(loc[5]=='구') tmp = loc.slice(3,6);
+        else tmp = loc.slice(3,7);
+
+
+        //여기는 지역이름 가져오는 api호출해주고, 지역이름 같이 넣어주기
+        var eng_name = get_english_name(tmp);
+        var data = get_airpollution(tmp);
         if(data){
         var table = document.getElementById('cur_loc');        
-        table.innerHTML = "<td>" + data['MSRDATE'] + "</td>";
-        table.innerHTML += "<td>" + data['MSRSTENAME'] + "</td>";
+        table.innerHTML = "<td>" + tmp +"<br>" + eng_name + "</td>";
         table.innerHTML += "<td>" + data['GRADE'] + "</td>";
+        table.innerHTML += "<td>" + data['POLLUTANT'] + "</td>";
         table.innerHTML += "<td>" + data['PM10'] + "</td>";
         table.innerHTML += "<td>" + data['PM25'] + "</td>";
+        table.innerHTML += "<td>" + data['NITROGEN'] + "</td>";
+        table.innerHTML += "<td>" + data['OZONE'] + "</td>";
+        table.innerHTML += "<td>" + data['CARBON'] + "</td>";
+        table.innerHTML += "<td>" + data['SULFUROUS'] + "</td>";
         table.innerHTML += "</table>";
         }
         else{
-            alert("서울특별시만 대기오염 정보를 확인할 수 있습니다!");
+            alert("MyAir only shows status in Seoul!");
         }
     
     }   
@@ -79,19 +91,16 @@ function makeDetailAddr(result, status) {
 
 function get_airpollution(loc){
     var result;
-    var tmp;
-    if(loc.slice(0,2)!= "서울") return 0;
-    if(loc[4]=='구') tmp = loc.slice(3,5);
-    else if(loc[5]=='구') tmp = loc.slice(3,6);
-    else tmp = loc.slice(3,7);
+
     $.ajax({
         url: "get_airpollution",
-        data: {'loc': tmp},
+        data: {'loc': loc},
         datatype: "json",
         async: false,
         success: function(data){
             console.log("listAir ajax 성공");
             result = data['data'];
+            console.log(result);
         },
         error:function(res){
             console.log("listAir ajax 실패");
@@ -109,12 +118,35 @@ function get_avg_airpollution(){
             console.log("avgAir ajax 성공");
             var table = document.getElementById('avg_seoul');        
             table.innerHTML = "<td>" + data['data']['GRADE'] + "</td>";
+            table.innerHTML += "<td>" + data['data']['POLLUTANT'] + "</td>";
             table.innerHTML += "<td>" + data['data']['PM10'] + "</td>";
             table.innerHTML += "<td>" + data['data']['PM25'] + "</td>";
+            table.innerHTML += "<td>" + data['data']['NITROGEN'] + "</td>";
+            table.innerHTML += "<td>" + data['data']['OZONE'] + "</td>";
+            table.innerHTML += "<td>" + data['data']['CARBON'] + "</td>";
+            table.innerHTML += "<td>" + data['data']['SULFUROUS'] + "</td>";
             table.innerHTML += "</table>"; 
         },
         error:function(res){
             console.log("avgAir ajax 실패");
         }
     });
+}
+
+function get_english_name(loc){
+    var result;
+    $.ajax({
+        url: "get_english_name",
+        data: {'loc':loc},
+        datatype: "json",
+        async : false,
+        success: function(data){
+            console.log("translate ajax 성공");
+            result = data['data'];
+        },
+        error:function(res){
+            console.log("translate ajax 실패");
+        }
+    });
+    return result;
 }

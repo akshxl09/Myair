@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from flask import g
 import os
+import json
 
 def get_mongo_cur():
     ''' return mongodb cursor'''
@@ -22,8 +23,12 @@ def init_models():
     '''mongodb-init function'''
     cur = MongoClient(os.environ['MYAIR_MONGODB'])
     db_name = 'Myair'
-    col_name = 'airpolution'
-    
-    # Create collection
+    col_name = 'masterconfig'
     col = cur[db_name][col_name]
+
+    with open('./app/models/db/region.json', encoding='UTF8') as f:
+        data = json.load(f)
+
+    col.update({'key': 'region'}, data, upsert=True)
+
     cur.close()

@@ -1,0 +1,30 @@
+{
+    "key": "region",
+    "value": {
+        "양천구": "YANGCHEON-GU",
+        "서대문구": "SEODEMUN-GU",
+        "동작구": "DONGJAK-GU",
+        "도봉구": "DOBONG-GU",
+        "성동구": "SEONGDONG-GU",
+        "강북구": "GANGBUK-GU",
+        "강서구": "GANGSEO-GU",
+        "마포구": "MAPO-GU",
+        "금천구": "GEUMCHOEN-GU",
+        "종로구": "JONNO-GU",
+        "서초구": "SEOCHO-GU",
+        "동대문구": "DONGDEMUN-GU",
+        "은평구": "EUNPYUNG-GU",
+        "송파구": "SONGPA-GU",
+        "강동구": "GANGDONG-GU",
+        "용산구": "YONGSAN-GU",
+        "강남구": "GANGNAM-GU",
+        "성북구": "SEONGBUK-GU",
+        "광진구": "GWANGJIN-GU",
+        "중구": "JUNG-GU",
+        "노원구": "NOWON-GU",
+        "중랑구": "JUNGNANG-GU",
+        "구로구": "GURO-GU",
+        "영등포구": "YEONGDEUNGPO-GU",
+        "관악구": "GWANAK-GU"
+    }
+}

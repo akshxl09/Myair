@@ -1,6 +1,7 @@
 from app.index import index
 from app.airList import list
 from app.avgAir import avg
+from app.translation import trans
 from flask import *
 from flask_cors import CORS
 from flask_jwt_extended import *
@@ -23,7 +24,7 @@ def main():
     app.register_blueprint(index)
     app.register_blueprint(list)
     app.register_blueprint(avg)
-    
+    app.register_blueprint(trans)
 
 @app.before_request
 def before_request():
@@ -35,4 +36,4 @@ def teardown_request(exception):
 
 if __name__ == "__main__":
     main()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
